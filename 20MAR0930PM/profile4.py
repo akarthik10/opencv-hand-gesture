@@ -38,9 +38,10 @@ cv.NamedWindow('HS_', cv.CV_WINDOW_AUTOSIZE)
 
 while True:
 	_, frame = cap.read()
+	sorg=frame
 	# orig=frame
-	if toface:
-		fx1,fy1,fx2,fy2=detect(frame)
+	# if toface:
+	# 	fx1,fy1,fx2,fy2=detect(frame)
 
 	frame=cv2.GaussianBlur(frame,(5,5), 5)
 	rows=frame.shape[0]
@@ -49,9 +50,9 @@ while True:
 		maskbox=np.ones((rows, cols, 1), np.uint8)
 	else:
 		frame=cv2.bitwise_and(frame , frame, mask= maskbox)
-	if fx1>0:
-		toface=0
-		frame[0:cols-2, fx1: ]=0
+	# if fx1>0:
+	# 	toface=0
+	# 	frame[0:cols-2, fx1: ]=0
 	orig=frame
 
 	hsv=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
@@ -61,7 +62,7 @@ while True:
 	frame=cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
 	frame=hsv
 
-	
+	ad=cv2.adaptiveThreshold(cv2.cvtColor(sorg, cv2.COLOR_BGR2GRAY),255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY_INV,501,75)
 	
 	
 	# if bg is None:
